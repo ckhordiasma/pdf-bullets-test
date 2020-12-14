@@ -7,6 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with: 
+          ref: master
+          fetch-depth: 0
       - name: prep and push mirror
         run: |
           USER=project_2367_bot
