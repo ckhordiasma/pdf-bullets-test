@@ -1,0 +1,19 @@
+name: Push to GitLab CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: prep and push mirror
+        run: |
+          USER=project_2367_bot
+          echo 'echo ${{ secrets.GITLAB_PUSH_KEY }}' > ./creds.sh
+          chmod 770 ./creds.sh
+          git config --global credential.helper cache
+          git config --global credential.username ${USER}
+          git config --global core.askPass ./creds.sh
+          git remote add mirror 'https://code.il2.dsop.io/chkodama/pdf-bullets-test.git'
+          git push -u mirror master:github
